@@ -21,7 +21,7 @@ RUN mkdir -p /etc/nginx/ssl
 # -subj: subject line for the certificate; change CN to your domain
 # -newkey rsa:2048: create a new 2048-bit RSA key
 RUN openssl req -x509 -nodes -days 365 \
-    -subj "/CN=kunel.42.fr" \
+    -subj "/CN=tbui-quo.42.fr" \
     -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt

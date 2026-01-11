@@ -19,7 +19,6 @@ RUN chmod +x /usr/local/bin/wait-for.sh
 COPY ./tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-
 # Set permissions for www-data
 RUN chown -R www-data:www-data /var/www/html
 
@@ -28,8 +27,6 @@ RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.c
 
 # Expose 9000 for PHP-FPM
 EXPOSE 9000
-
-# CMD ["/usr/sbin/php-fpm8.2", "-F", "-R"]
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
