@@ -1,19 +1,23 @@
 NAME        := inception
-LOGIN       := kunel
-DATA_DIR    := /home/$(LOGIN)/data
+LOGIN       := tbui-quo
+DATA_PATH   := $(HOME)/data
+MARIADB_DIR := $(DATA_PATH)/mariadb
+WP_DIR      := $(DATA_PATH)/wordpress
 
-COMPOSE     := docker compose -p $(NAME) -f srcs/docker-compose.yml
-VOLUMES     := $(NAME)_mariadb_data $(NAME)_wp_data
+# Paths to your source files
+CONF_FILE   := srcs/docker-compose.yml
+ENV_FILE    := srcs/.env
 
-# Load env from a specific path
-ENV_FILE := ./srcs/.env
-export $(shell sed 's/=.*//' $(ENV_FILE))
+COMPOSE     := docker compose -p $(NAME) -f $(CONF_FILE) --env-file $(ENV_FILE)
 
 
 all: up
 
 up:
-	@mkdir -p $(DATA_DIR)
+	@echo "▶ Creating data directories..."
+	@mkdir -p $(MARIADB_DIR)
+	@mkdir -p $(WP_DIR)
+	@echo "▶ Starting containers..."
 	@$(COMPOSE) up --build -d
 
 down:
@@ -25,12 +29,16 @@ stop:
 	@$(COMPOSE) stop
 
 clean: down
-	@echo "▶ Removing containers and images"
-	@$(COMPOSE) down --rmi all
+	@echo "▶ Removing images..."
+	@docker system prune -a -f
 
-fclean: clean
-	@echo "▶ Removing volumes"
-	@for v in $(VOLUMES); do docker volume rm $$v || true; done
+fclean:
+	@echo "▶ Total cleanup (Containers, Volumes, Images)..."
+	@$(COMPOSE) down -v --rmi all
+	@echo "▶ Deleting data folders safely..."
+	@rm -rf $(MARIADB_DIR)
+	@rm -rf $(WP_DIR)
+	@rm -rf $(DATA_PATH)
 
 re: fclean all
 

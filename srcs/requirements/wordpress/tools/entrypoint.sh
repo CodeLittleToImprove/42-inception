@@ -8,6 +8,9 @@ cd /var/www/html
 # Increase PHP memory
 sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/8.2/fpm/php.ini
 
+# Safety fallback: if HOST is empty, use 'mariadb'
+WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST:-mariadb}
+
 # Wait for the database to be ready
 until nc -z "$WORDPRESS_DB_HOST" 3306; do
     sleep 2
