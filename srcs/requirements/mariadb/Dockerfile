@@ -10,7 +10,7 @@ RUN mkdir -p /run/mysqld && \
     chown -R mysql:mysql /run/mysqld
 
 
-# Copy custom configuration if you have one
+# Copy custom configuration if you have one / get ready when automatically when 
 COPY my.cnf /etc/mysql/my.cnf
 
 # Copies the database initialization script into a special MariaDB directory.
