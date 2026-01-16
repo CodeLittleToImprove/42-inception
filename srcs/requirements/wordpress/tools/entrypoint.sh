@@ -2,6 +2,13 @@
 
 set -e
 
+# Default port fallback if WP_PORT not defined
+: "${WP_PORT:=9000}"
+
+# Replace PHP-FPM listen line dynamically
+sed -i "s|^listen = .*|listen = 0.0.0.0:${WP_PORT}|" /etc/php/8.2/fpm/pool.d/www.conf
+
+echo $WP_PORT
 # Go to WordPress directory
 cd /var/www/html
 
@@ -12,7 +19,7 @@ sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/8.2/fpm/php.ini
 WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST:-mariadb}
 
 # Wait for the database to be ready
-until nc -z "$WORDPRESS_DB_HOST" 3306; do
+until nc -z "$WORDPRESS_DB_HOST" "$MYSQL_TCP_PORT"; do
     sleep 2
 done
 
@@ -28,7 +35,7 @@ if [ ! -f wp-config.php ]; then
         --dbname="$WORDPRESS_DB_NAME" \
         --dbuser="$WORDPRESS_DB_USER" \
         --dbpass="$(cat /run/secrets/db_user_password)" \
-        --dbhost="$WORDPRESS_DB_HOST:3306" \
+        --dbhost="$WORDPRESS_DB_HOST:$MYSQL_TCP_PORT" \
         --allow-root
 
     # Install WordPress
