@@ -32,7 +32,7 @@ stop:
 
 clean: down
 	@echo "▶ Removing images..."
-	@docker system prune -a -f
+	$(COMPOSE) down -v --rmi all
 
 fclean:
 	@echo "▶ Stopping containers and clearing volumes..."
