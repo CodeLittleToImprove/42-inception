@@ -165,6 +165,23 @@ The following commands can be used to inspect and control individual containers.
 **Remove unused volumes:**
 `docker volume prune`
 
+### Accessing the MariaDB Database
+
+To inspect the database from the MariaDB container and check if the inception_db is empty :
+
+**Open a shell in the MariaDB container and log in as root:**
+
+`docker exec -it inception-mariadb-1 mariadb -u root -p`
+
+**List all databases:**
+`SHOW DATABASES;`
+
+**Select the Inception database**
+`USE inception_db;`
+
+**List all tables in the database:**
+`SHOW TABLES;`
+
 ## 4. Project Data Storage and Persistence
 Docker volumes ensure data persistence across container restarts, specifically for:
 
