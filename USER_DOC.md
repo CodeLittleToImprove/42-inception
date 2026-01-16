@@ -54,9 +54,8 @@ Once the project is running, you can accessed the wordpress site via:
 - https://tbui-quo.42.fr
 
 ### WordPress Administration Panel
-You can access the WordPress admin dashboard:
-- Open a browser and go to:
-`https://tbui-quo.42.fr/wp-login.php`
+You can access the WordPress admin dashboard via following url:
+- https://tbui-quo.42.fr/wp-login.php
 - Log in using the Wordpress user credentials you defined in your env and secrets files.
 
 ## 5. Checking Service Status
