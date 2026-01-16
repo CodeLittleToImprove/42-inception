@@ -54,4 +54,13 @@ ps:
 logs:
 	@$(COMPOSE) logs -f
 
+status:
+	@echo "---------------- CONTAINER STATUS ----------------"
+	@$(COMPOSE) ps
+	@echo "\n----------------- NETWORK STATUS -----------------"
+	@docker network ls --filter name=$(NAME)
+	@echo "\n------------------ VOLUME STATUS -----------------"
+	@docker volume ls --filter name=$(NAME)
+
+
 
