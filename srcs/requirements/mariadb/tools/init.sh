@@ -24,17 +24,20 @@ for i in {30..0}; do
     sleep 1
 done
 
-echo "▶ Applying SQL configuration..."
-mysql -u root <<EOF
+# Check if this scripts run for the first time or the second time for example after rebooting
+if mysql -u root -e "status" >/dev/null 2>&1; then
+    echo "▶ Configuring MariaDB (First time setup)..."
+    mysql -u root <<EOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASS}';
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
--- Create the user for remote connections (WordPress)
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${DB_USER_PASS}';
 GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
--- Ensure root can also connect remotely if needed (for debugging)
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${DB_ROOT_PASS}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 EOF
+else
+    echo "▶ MariaDB already configured. Verifying with password..."
+    mysql -u root -p"${DB_ROOT_PASS}" -e "FLUSH PRIVILEGES;"
+fi
 
 echo "▶ Shutting down temporary MariaDB..."
 mysqladmin -u root -p"${DB_ROOT_PASS}" shutdown
