@@ -14,7 +14,7 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      test: mysqladmin ping -h localhost -u root -p$$(cat /run/secrets/db_root_password)
       interval: 10s
       timeout: 5s
       retries: 5

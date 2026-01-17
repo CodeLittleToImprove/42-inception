@@ -18,7 +18,7 @@ sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/8.2/fpm/php.ini
 
 # Wait for the database to be ready
 until nc -z "$WORDPRESS_DB_HOST" "$MYSQL_TCP_PORT"; do
-    sleep 2
+    sleep 4
 done
 
 # Configure WordPress if not already
@@ -26,7 +26,9 @@ if [ ! -f wp-config.php ]; then
     echo "WordPress not configured. Setting up..."
 
     # Download WordPress
-    wp core download --locale=en_US --allow-root
+	if [ ! -f "/var/www/html/wp-settings.php" ]; then
+        wp core download --allow-root
+    fi
 
     # Create wp-config.php
   wp config create \

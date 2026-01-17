@@ -138,6 +138,9 @@ Displays:
 - **Rebuild a specific service**
 `docker compose build <service_name>`
 
+- **Full clearing everything**
+`docker compose -p inception down -v`
+
 ## 3. Managing Containers and Volumes
 The following commands can be used to inspect and control individual containers.
 

@@ -15,7 +15,7 @@ RUN chmod +x /init.sh
 
 EXPOSE 3306
 
-CMD ["sh", "-c", "mysqld_safe & sleep 5; /init.sh; wait"]
+CMD ["/init.sh"]
 
 
 
