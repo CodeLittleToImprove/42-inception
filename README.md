@@ -53,11 +53,19 @@ Host Network shares the whole network stack with the container, meaning the cont
 ### Docker Volumes vs Bind Mounts
 Docker volumes are directly managed by docker which is stored in /var/lib/docker/volumes/`. This means they provide a persistent portable storage. On other hand bind mounts directly connects a host directory to the container which is nor portable and it always requires a hardcorded path a path on the host machine, which has to be created manualy before running a dockerfile.
 
-### Resources
-Resources that I found helpful to get a better understanding about docker and containers in general
-
+## Ressources
+Resource which helped me to get a better understand of thhis project and docker in general and other helpful toolks
 #### Docker commands:
 - https://docs.docker.com/reference/dockerfile/
 
-#### PID 1
+
+#### PID 1 understanding
 - https://www.marcusfolkesson.se/blog/pid1-in-containers/
+
+
+#### Markdown visualizer tool
+- https://markdownlivepreview.com/
+
+
+#### How to combine Nginx, MariaDB and Wordpress
+- https://www.ionos.com/digitalguide/hosting/blogs/wordpress-nginx/

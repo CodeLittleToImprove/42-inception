@@ -58,7 +58,7 @@ You can access the WordPress admin dashboard via following url:
 - https://tbui-quo.42.fr/wp-login.php
 - Log in using the Wordpress user credentials you defined in your env and secrets files.
 
-## 5. Checking Service Status
+### Checking Service Status
 To check the status of the docker container you can use the make command `make status`
 which run following command
 - `docker ps` shows all containers as Up (healthy).
