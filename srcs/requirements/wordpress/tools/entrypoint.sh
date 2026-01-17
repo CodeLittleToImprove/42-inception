@@ -2,21 +2,19 @@
 
 set -e
 
-# Default port fallback if WP_PORT not defined
+# Default port fallbacks if environment variables not defined
 : "${WP_PORT:=9000}"
+: "${MYSQL_TCP_PORT:=3306}"
+: "${WORDPRESS_DB_HOST:=mariadb}"
 
 # Replace PHP-FPM listen line dynamically
 sed -i "s|^listen = .*|listen = 0.0.0.0:${WP_PORT}|" /etc/php/8.2/fpm/pool.d/www.conf
 
-echo $WP_PORT
 # Go to WordPress directory
 cd /var/www/html
 
 # Increase PHP memory
 sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/8.2/fpm/php.ini
-
-# Safety fallback: if HOST is empty, use 'mariadb'
-WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST:-mariadb}
 
 # Wait for the database to be ready
 until nc -z "$WORDPRESS_DB_HOST" "$MYSQL_TCP_PORT"; do
