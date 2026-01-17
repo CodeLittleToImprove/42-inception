@@ -22,9 +22,6 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 # Set permissions for www-data
 RUN chown -R www-data:www-data /var/www/html
 
-# Make PHP-FPM listen on all interfaces on port 9000
-RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
-
 # Expose 9000 for PHP-FPM
 EXPOSE 9000
 
