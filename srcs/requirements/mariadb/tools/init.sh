@@ -24,7 +24,6 @@ for i in {30..0}; do
     sleep 1
 done
 
-# 3. Apply SQL Configuration (Runs every time to ensure host permissions are correct)
 echo "▶ Applying SQL configuration..."
 mysql -u root <<EOF
 ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASS}';
@@ -37,11 +36,9 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${DB_ROOT_PASS}' WITH G
 FLUSH PRIVILEGES;
 EOF
 
-# 4. Shut down temporary instance
 echo "▶ Shutting down temporary MariaDB..."
 mysqladmin -u root -p"${DB_ROOT_PASS}" shutdown
 wait $PID
 
-# 5. Start MariaDB as the main process
 echo "▶ MariaDB is ready. Starting main process..."
 exec mysqld --user=mysql
