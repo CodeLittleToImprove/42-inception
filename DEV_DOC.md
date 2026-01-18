@@ -157,6 +157,9 @@ The following commands can be used to inspect and control individual containers.
 **Access a running container shell:**
 `docker exec -it <container_name> sh`
 
+**Nuke every container**
+`docker system prune -a --volumes -f`
+
 ### Volumes management
 
 **List all volumes:**
@@ -182,8 +185,17 @@ To inspect the database from the MariaDB container and check if the inception_db
 **Select the Inception database**
 `USE inception_db;`
 
-**List all tables in the database:**
+**List all tables in the database**
 `SHOW TABLES;`
+
+**Show the content of a table in the database**
+`SELECT * FROM table_name;`
+
+### other noteworthy commands
+**Check if a page is accesible via port 80**
+`curl -v http://tbui-quo.42.fr:80`
+
+
 
 ## 4. Project Data Storage and Persistence
 Docker volumes ensure data persistence across container restarts, specifically for:
