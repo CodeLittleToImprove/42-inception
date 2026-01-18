@@ -177,7 +177,7 @@ To inspect the database from the MariaDB container and check if the inception_db
 
 **Open a shell in the MariaDB container and log in as root:**
 
-`docker exec -it inception-mariadb-1 mariadb -u root -p`
+`docker exec -it mariadb mariadb -u root -p`
 
 **List all databases:**
 `SHOW DATABASES;`
@@ -194,8 +194,6 @@ To inspect the database from the MariaDB container and check if the inception_db
 ### other noteworthy commands
 **Check if a page is accesible via port 80**
 `curl -v http://tbui-quo.42.fr:80`
-
-
 
 ## 4. Project Data Storage and Persistence
 Docker volumes ensure data persistence across container restarts, specifically for:
